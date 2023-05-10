@@ -1,5 +1,5 @@
 ## **Documentation for Project 6**
 
-### Installing MySQL Server 
-`sudo apt install mysql-server -y`
-![MySQL-Server-Installed](./Images/My-SQL-Server-Installation.png)
+### Entire View of the newly created Block Devices 
+`lsblk`
+![list-of-newly-created-Block-devices](./Images WebServer/)
