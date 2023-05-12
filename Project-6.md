@@ -62,3 +62,57 @@
 ### Mounting-Log-files-directory-on-logs-lv
 `sudo mount /dev/webdata-vg/logs-lv /var/log`
 ![Mounting-Log-Directory-on-logs-lv](./Images-WebServer/log-files-mounted-on-logs-lv.png)
+
+### Updating-fstab
+`sudo vi /etc/fstab`
+![fstab-updated](./Images-WebServer/fstab-updated.png)
+
+### Entire-setup-of-Volumes
+`df -h`
+![View-of-the-entire-setup-of-volumes](./Images-WebServer/entire-setup-view-of-volumes.png)
+
+## **Preparing Database Server**
+
+### Volumes-Attached-for-DB-Server
+`lsblk`
+![volumes-attached](./Images-DBServer/Volumes-attached-for-DBServer.png)
+
+
+### Volumes-successfully-partitioned
+`sudo gdisk /dev/xvdf`
+![volumes-successfully-partitioned](./Images-DBServer/Successful-partitioning-of-volumes.png)
+
+### Volumes-marked-as-physical-volumes
+`sudo pvcreate /dev/xvdf1 /dev/xvdg1 /dev/xvdh1`
+![Physical-volumes-created](./Images-DBServer/Volumes-marked-as-physical-volumes.png)
+
+### Installing LVM2 for DB Server
+`sudo yum install lvm2`
+![LVM2-Installed](./Images-DBServer/lvm2-installed-for-dbSever.png)
+
+### Creating Volume Groups for DBServer
+`sudo vgcreate vg-dbdatabase /dev/xvdf1 /dev/xvdg1 /dev/xvdh1`
+`sudo vgs`
+![Volume-Group-Created](./Images-DBServer/volumes-successfully-attached-to-a-volume-group.png)
+
+### Creating Logical Volumes
+`sudo lvcreate -n db-lv -l 20G vg-dbdatabase`
+`sudo vgs`
+`sudo lvs`
+![Logical-Volumes-Created](./Images-DBServer/logical-volume-created-for-dbServer.png)
+
+### Formatting-Logical-Volumes-with-EXT4-Filesystem
+`sudo mkfs -t ext4 /dev/vg-dbdatabase/db-lv`
+![Logical-volume-formatted](./Images-DBServer/formatting-logical-volume-with-ext4.png)
+
+### Logical Volume Mounted on DB Directory
+`sudo mount /dev/vg-dbdatabase/db-lv /db`
+![Logical-volume-Mounted](./Images-DBServer/logical-volume-mounted-on-db-directory.png)
+
+### Updating fstab for DB
+`sudo vi /etc/fstab`
+![fstab-Updated-for-DB](./Images-DBServer/fstab-updated.png)
+### mysql installation on DBServer
+`sudo yum update`
+`sudo yum install mysql-server`
+![my-sql-server-installed](./Images-DBServer/my-sql-server-installed-on-dbserver.png)
