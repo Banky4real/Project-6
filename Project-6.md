@@ -116,3 +116,42 @@
 `sudo yum update`
 `sudo yum install mysql-server`
 ![my-sql-server-installed](./Images-DBServer/my-sql-server-installed-on-dbserver.png)
+
+## **Installing Wordpress on Webserver**
+### Installing wget and its dependencies
+`sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json`
+![wget-and-dependencies-installation](./Images-WebServer/wget-and-it-dependencies-installed.png)
+
+### Download wordpress and copy wordpress to var/www/html
+` mkdir wordpress`
+
+`cd wordpress`
+
+`sudo wget http://wordpress.org/latest.tar.gz`
+
+`cp -R wordpress /var/www/html/`
+![wordpress-download](./Images-WebServer/WordPress-downloaded-and-copied-to-var-www-html.png)
+
+### Configuring SElinux Policies
+`sudo chown -R apache:apache /var/www/html/wordpress`
+
+`sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R`
+
+`sudo setsebool -P httpd_can_network_connect=1`
+![Selinux-Policies-configuration](./Images-WebServer/SElinux-policies-configured.png)
+
+### Configure DB to work with WordPress
+`show databases`
+![show-databases-command-executed-on-webserver-to-show-list-of-databases-on-dbserver](./Images-WebServer/show-databases-command-executed-on-webserver-to-show-list-of-databases-on-dbserver.png)
+
+### Configure WordPress to connect to remote database
+`sudo mysql -u dbuser -p -h 172.31.30.247`
+![User-connected-to-Dbserver-from-Webserver](./Images-WebServer/user-connected-to-dbserver-successfully-from-webserver.png)
+
+### link to WordPress accessed from Browser
+`http://54.89.100.91/wordpress/`
+![WordPress-accessed-from-Browser](./Images-WebServer/Wordpress-accessed.png)
+
+### WordPress successfully Deployed
+`http://54.89.100.91/wordpress/`
+![WordPress-Deployed](./Images-WebServer/successfully-deployed-wordpress.png)
